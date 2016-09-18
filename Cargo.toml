@@ -1,6 +1,6 @@
 [package]
 name = "bit_reverse"
-version = "0.1.0"
+version = "0.1.1-pre"
 authors = ["Eugene Gonzalez <gene@teamtiki.us>"]
 description = "Computes the bit reversal of primitive integers."
 documentation = "https://EugeneGonzalez.github.io/bit_reverse"
