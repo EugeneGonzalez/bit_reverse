@@ -2,18 +2,12 @@
 name = "bit_reverse"
 version = "0.1.0"
 authors = ["Eugene Gonzalez <gene@teamtiki.us>"]
-
 description = "Computes the bit reversal of primitive integers."
-
 documentation = "https://EugeneGonzalez.github.io/bit_reverse"
 repository = "https://github.com/EugeneGonzalez/bit_reverse"
-
-readme = "README"
-
+readme = "README.md"
 keywords = ["bit", "reverse"]
+license = "MIT/Apache-2.0"
 
-# This is a string description of the license for this package. Currently
-# crates.io will validate the license provided against a whitelist of known
-# license identifiers from http://spdx.org/licenses/. Multiple licenses can be
-# separated with a `/`.
-license = "MIT"
+[package.metadata.release]
+upload-doc = true
