@@ -11,16 +11,9 @@
 //! Parallel allocates 3 constants of the same size of the type being reversed.
 //! Lookup allocates 256 u8s or 256 bytes to do its byte lookup reversal.
 //!
-//! ## How to use
-//! This library is really simple to use just do the following:
-//! 1. Import this crate
-//! 2. Use the algorithm you want to use
-//! 3. Call swap_bits()
-//!
 //! ## Example
-//!
 //! ```
-//! use bit_reverse:: ParallelReverse;
+//! use bit_reverse::ParallelReverse;
 //!
 //! assert_eq!(0xA0u8.swap_bits(), 0x05u8);
 //! ```
