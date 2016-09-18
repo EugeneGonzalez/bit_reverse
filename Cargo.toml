@@ -1,0 +1,6 @@
+[package]
+name = "bit_reverse"
+version = "0.1.0"
+authors = ["Eugene Gonzalez <gene@teamtiki.us>"]
+
+[dependencies]
