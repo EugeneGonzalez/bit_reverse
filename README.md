@@ -1,4 +1,5 @@
 # bit_reverse
+[![Crates Shield](https://img.shields.io/crates/v/bit_reverse.svg "Crates.io")](https://crates.io/crates/bit_reverse)
 
 ### Library Objective
 This library provides a number of ways to compute the bit reversal of all primitive integers.
