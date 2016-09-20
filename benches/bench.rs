@@ -1,3 +1,4 @@
+#![allow(overflowing_literals)]
 #![feature(test)]
 
 extern crate bit_reverse;
@@ -35,6 +36,48 @@ macro_rules! benchmark_suite {
             fn reverse_u64(b: &mut Bencher) {
                 b.iter(|| {
                     0xFEDCBA9876543210u64.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_usize(b: &mut Bencher) {
+                b.iter(|| {
+                    0xFFusize.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_i8(b: &mut Bencher) {
+                b.iter(|| {
+                    0xEDi8.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_i16(b: &mut Bencher) {
+                b.iter(|| {
+                    0xABCDi16.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_i32(b: &mut Bencher) {
+                b.iter(|| {
+                    0xABCD2345i32.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_i64(b: &mut Bencher) {
+                b.iter(|| {
+                    0xFEDCBA9876543210i64.swap_bits()
+                });
+            }
+
+            #[bench]
+            fn reverse_isize(b: &mut Bencher) {
+                b.iter(|| {
+                    0xFFisize.swap_bits()
                 });
             }
         }

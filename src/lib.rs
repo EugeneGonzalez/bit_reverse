@@ -27,7 +27,7 @@ pub trait BitwiseReverse<T> {
     fn swap_bits(self) -> T;
 }
 
-macro_rules! doit_bitwise { ($($ty:ty)*) => ($(
+macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
     impl BitwiseReverse<$ty> for $ty {
         // This algorithm uses the reverse variable as a like a stack to reverse the value.
         // The lesser significant bits are pushed onto the reverse variable and then the variable
@@ -58,7 +58,7 @@ macro_rules! doit_bitwise { ($($ty:ty)*) => ($(
     })*)
 }
 
-doit_bitwise!(u8 u16 u32 u64 usize i8 i16 i32 i64 isize);
+doit_bitwise!(u8, u16, u32, u64, usize);
 
 /// Computes bit reversal by using a divide and conquer approach. Pairs of bits are swapped.
 /// Then neighboring bit pairs are swapped. Each time swapping the next largest group of bits.
@@ -68,7 +68,7 @@ pub trait ParallelReverse<T> {
     fn swap_bits(self) -> T;
 }
 
-macro_rules! doit_parallel { ($($ty:ty)*) => ($(
+macro_rules! doit_parallel { ($($ty:ty),*) => ($(
     impl ParallelReverse<$ty> for $ty {
         fn swap_bits(self) -> $ty {
             let mut v = self;
@@ -84,7 +84,7 @@ macro_rules! doit_parallel { ($($ty:ty)*) => ($(
     })*)
 }
 
-doit_parallel!(u8 u16 u32 u64 usize i8 i16 i32 i64 isize);
+doit_parallel!(u8, u16, u32, u64, usize);
 
 /// Computes bit reversal by using lookup table to translate a single byte into its reverse.
 /// For multi-byte types, the byte order is swapped to complete the reversal.
@@ -162,6 +162,42 @@ impl LookupReverse<usize> for usize {
     }
 }
 
+macro_rules! doit_signed {
+    ($($Algo:ident),*) => ($(
+        impl $Algo<i8> for i8 {
+            fn swap_bits(self) -> i8 {
+                $Algo::swap_bits(self as u8) as i8
+            }
+        }
+
+        impl $Algo<i16> for i16 {
+            fn swap_bits(self) -> i16 {
+                $Algo::swap_bits(self as u16) as i16
+            }
+        }
+
+        impl $Algo<i32> for i32 {
+            fn swap_bits(self) -> i32 {
+                $Algo::swap_bits(self as u32) as i32
+            }
+        }
+
+        impl $Algo<i64> for i64 {
+            fn swap_bits(self) -> i64 {
+                $Algo::swap_bits(self as u64) as i64
+            }
+        }
+
+        impl $Algo<isize> for isize {
+            fn swap_bits(self) -> isize {
+                $Algo::swap_bits(self as usize) as isize
+            }
+        }
+    )*)
+}
+
+doit_signed!(BitwiseReverse, ParallelReverse, LookupReverse);
+
 macro_rules! test_suite {
     ($name:ident, $algo:path) => (
         #[cfg(test)]
@@ -191,6 +227,31 @@ macro_rules! test_suite {
             #[test]
             fn reverse_usize() {
                 assert_eq!(0xFFusize.swap_bits(), 0xFFusize.swap_bytes());
+            }
+
+            #[test]
+            fn reverse_i8() {
+                assert_eq!(0xABi8.swap_bits(), 0xD5i8);
+            }
+
+            #[test]
+            fn reverse_i16() {
+                assert_eq!(0xABCDi16.swap_bits(), 0xB3D5i16);
+            }
+
+            #[test]
+            fn reverse_i32() {
+                assert_eq!(0xABCD2345i32.swap_bits(), 0xA2C4B3D5i32);
+            }
+
+            #[test]
+            fn reverse_i64() {
+                assert_eq!(0x0123456789ABCDEFi64.swap_bits(), 0xF7B3D591E6A2C480i64);
+            }
+
+            #[test]
+            fn reverse_isize() {
+                assert_eq!(0xFFisize.swap_bits(), 0xFFisize.swap_bytes());
             }
         }
     )
