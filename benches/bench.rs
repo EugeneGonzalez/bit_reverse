@@ -7,42 +7,34 @@ macro_rules! benchmark_suite {
     ($name:ident, $algo:ident) => (
         #[cfg(test)]
         mod $name {
-            use super::test;
             use bit_reverse::$algo;
+            use super::test::Bencher;
 
             #[bench]
-            fn reverse_u8(b: &mut test::Bencher) {
+            fn reverse_u8(b: &mut Bencher) {
                 b.iter(|| {
-                    let n = test::black_box(0xEDu8);
-
-                    n.swap_bits()
+                    0xEDu8.swap_bits()
                 });
             }
 
             #[bench]
-            fn reverse_u16(b: &mut test::Bencher) {
+            fn reverse_u16(b: &mut Bencher) {
                 b.iter(|| {
-                    let n = test::black_box(0xABCDu16);
-
-                    n.swap_bits()
+                    0xABCDu16.swap_bits()
                 });
             }
 
             #[bench]
-            fn reverse_u32(b: &mut test::Bencher) {
+            fn reverse_u32(b: &mut Bencher) {
                 b.iter(|| {
-                    let n = test::black_box(0xABCD2345u32);
-
-                    n.swap_bits()
+                    0xABCD2345u32.swap_bits()
                 });
             }
 
             #[bench]
-            fn reverse_u64(b: &mut test::Bencher) {
+            fn reverse_u64(b: &mut Bencher) {
                 b.iter(|| {
-                    let n = test::black_box(0xFEDCBA9876543210u64);
-
-                    n.swap_bits()
+                    0xFEDCBA9876543210u64.swap_bits()
                 });
             }
         }
