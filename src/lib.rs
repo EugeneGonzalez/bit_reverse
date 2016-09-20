@@ -8,9 +8,9 @@
 //!
 //! assert_eq!(0xA0u8.swap_bits(), 0x05u8);
 //! ```
-//! This library is very simple uses just import the crate and the algorithm you want to use. Then
-//! you can call swap_bits() on any primitive integer. If you want to try a different algorithm
-//! just change the use statement and now your program will use the algorithm instead.
+//! This library is very simple to uses just import the crate and the algorithm you want to use.
+//! Then you can call swap_bits() on any primitive integer. If you want to try a different
+//! algorithm just change the use statement and now your program will use the algorithm instead.
 //!
 //! ## YMMV Performance Comparison
 //! I wouldn't use BitwiseReverse as it is mainly there for completeness and is strictly inferior
