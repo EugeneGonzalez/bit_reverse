@@ -18,12 +18,8 @@
 //! assert_eq!(0xA0u8.swap_bits(), 0x05u8);
 //! ```
 
-
 // This library abuse overflowing literals to be able to use macros to reduce duplicate code.
 #![allow(overflowing_literals)]
-
-// #![feature(test)]
-// extern crate test;
 
 /// Computes bit reversal by going bit by bit and setting the reverse position bit for the output.
 pub trait BitwiseReverse<T> {
@@ -203,54 +199,3 @@ macro_rules! test_suite {
 test_suite!(test_bitwise_reverse, BitwiseReverse);
 test_suite!(test_parallel_reverse, ParallelReverse);
 test_suite!(test_lookup_reverse, LookupReverse);
-
-macro_rules! benchmark_suite {
-    ($name:ident, $algo:path) => (
-        #[cfg(test)]
-        mod $name {
-            use super::test;
-            use $algo;
-
-            #[bench]
-            fn reverse_u8(b: &mut test::Bencher) {
-                b.iter(|| {
-                    let n = test::black_box(0xEDu8);
-
-                    n.swap_bits()
-                });
-            }
-
-            #[bench]
-            fn reverse_u16(b: &mut test::Bencher) {
-                b.iter(|| {
-                    let n = test::black_box(0xABCDu16);
-
-                    n.swap_bits()
-                });
-            }
-
-            #[bench]
-            fn reverse_u32(b: &mut test::Bencher) {
-                b.iter(|| {
-                    let n = test::black_box(0xABCD2345u32);
-
-                    n.swap_bits()
-                });
-            }
-
-            #[bench]
-            fn reverse_u64(b: &mut test::Bencher) {
-                b.iter(|| {
-                    let n = test::black_box(0xFEDCBA9876543210u64);
-
-                    n.swap_bits()
-                });
-            }
-        }
-    )
-}
-
-// Uncomment these lines and the test feature and crate at the top of the file to run the benchs.
-// benchmark_suite!(benchmark_parallel_reverse, ParallelReverse);
-// benchmark_suite!(benchmark_lookup_reverse, LookupReverse);
-// benchmark_suite!(benchmark_bitwise_reverse, BitwiseReverse);
