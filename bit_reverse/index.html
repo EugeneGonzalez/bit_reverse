@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/bit_reverse/src/lib.rs.html#1-267' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-0' class='srclink' href='../src/bit_reverse/src/lib.rs.html#1-276' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h2 id='library-objective' class='section-header'><a href='#library-objective'>Library Objective</a></h2>
 <p>This library provides a number of ways to compute the bit reversal of all primitive integers.
@@ -59,13 +59,13 @@ There are currently 3 different algorithms implemented: Bitwise, Parallel, and L
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>0xA0u8</span>.<span class='ident'>swap_bits</span>(), <span class='number'>0x05u8</span>);</pre>
 
-<p>This library is very simple uses just import the crate and the algorithm you want to use. Then
-you can call swap_bits() on any primitive integer. If you want to try a different algorithm
-just change the use statement and now your program will use the algorithm instead.</p>
+<p>This library is very simple to uses just import the crate and the algorithm you want to use.
+Then you can call swap_bits() on any primitive integer. If you want to try a different
+algorithm just change the use statement and now your program will use the algorithm instead.</p>
 
 <h2 id='ymmv-performance-comparison' class='section-header'><a href='#ymmv-performance-comparison'>YMMV Performance Comparison</a></h2>
 <p>I wouldn&#39;t use BitwiseReverse as it is mainly there for completeness and is strictly inferior
-to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faseter.
+to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faster.
 I would recommend you use the ParallelReverse as it performs equal to or better than
 LookupReverse for all types. Plus as an added bonus doesn&#39;t eat your cache with a lookup table.</p>
 
@@ -73,6 +73,10 @@ LookupReverse for all types. Plus as an added bonus doesn&#39;t eat your cache w
 <p>Bitwise uses the least amount of memory only using three integers to compute the reversal.
 Parallel allocates 3 constants of the same size of the type being reversed.
 Lookup allocates 256 u8s or 256 bytes to do its byte lookup reversal.</p>
+
+<h2 id='no_std-compatible' class='section-header'><a href='#no_std-compatible'>no_std Compatible</a></h2>
+<p>To link to core instead of STD, disable default features for this library in your Cargo.toml.
+<a href="http://doc.crates.io/specifying-dependencies.html#choosing-features">Cargo choosing features</a></p>
 </div><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>

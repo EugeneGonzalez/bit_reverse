@@ -309,6 +309,15 @@
 <span id="265">265</span>
 <span id="266">266</span>
 <span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! ## Library Objective</span>
 <span class='doccomment'>//! This library provides a number of ways to compute the bit reversal of all primitive integers.</span>
@@ -320,13 +329,13 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! assert_eq!(0xA0u8.swap_bits(), 0x05u8);</span>
 <span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! This library is very simple uses just import the crate and the algorithm you want to use. Then</span>
-<span class='doccomment'>//! you can call swap_bits() on any primitive integer. If you want to try a different algorithm</span>
-<span class='doccomment'>//! just change the use statement and now your program will use the algorithm instead.</span>
+<span class='doccomment'>//! This library is very simple to uses just import the crate and the algorithm you want to use.</span>
+<span class='doccomment'>//! Then you can call swap_bits() on any primitive integer. If you want to try a different</span>
+<span class='doccomment'>//! algorithm just change the use statement and now your program will use the algorithm instead.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! ## YMMV Performance Comparison</span>
 <span class='doccomment'>//! I wouldn&#39;t use BitwiseReverse as it is mainly there for completeness and is strictly inferior</span>
-<span class='doccomment'>//! to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faseter.</span>
+<span class='doccomment'>//! to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faster.</span>
 <span class='doccomment'>//! I would recommend you use the ParallelReverse as it performs equal to or better than</span>
 <span class='doccomment'>//! LookupReverse for all types. Plus as an added bonus doesn&#39;t eat your cache with a lookup table.</span>
 <span class='doccomment'>//!</span>
@@ -334,9 +343,18 @@
 <span class='doccomment'>//! Bitwise uses the least amount of memory only using three integers to compute the reversal.</span>
 <span class='doccomment'>//! Parallel allocates 3 constants of the same size of the type being reversed.</span>
 <span class='doccomment'>//! Lookup allocates 256 u8s or 256 bytes to do its byte lookup reversal.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## no_std Compatible</span>
+<span class='doccomment'>//! To link to core instead of STD, disable default features for this library in your Cargo.toml.</span>
+<span class='doccomment'>//! [Cargo choosing features](http://doc.crates.io/specifying-dependencies.html#choosing-features)</span>
 
 <span class='comment'>// This library abuse overflowing literals to be able to use macros to reduce duplicate code.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>overflowing_literals</span>)]</span>
+
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;use_std&quot;</span>), <span class='ident'>no_std</span>)]</span>
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;use_std&quot;</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>std</span> <span class='kw'>as</span> <span class='ident'>core</span>;
 
 <span class='doccomment'>/// Computes bit reversal by going bit by bit and setting the reverse position bit for the output.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>BitwiseReverse</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -359,7 +377,7 @@
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='self'>self</span>;
 
             <span class='comment'>// Compute how many bits are left to shift at the end of the algorithm.</span>
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='number'>8</span> <span class='op'>*</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span><span class='op'>&gt;</span>() <span class='op'>-</span> <span class='number'>1</span>;
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='number'>8</span> <span class='op'>*</span> <span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ty</span><span class='op'>&gt;</span>() <span class='op'>-</span> <span class='number'>1</span>;
 
             <span class='ident'>v</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
             <span class='kw'>while</span> <span class='ident'>v</span> <span class='op'>!=</span> <span class='number'>0</span> {  <span class='comment'>// Quit early if there are no more 1s to shift in</span>
