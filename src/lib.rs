@@ -48,6 +48,7 @@ macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
         // is shifted down to make room for more significant bits. This algorithm has a shortcut,
         // that if there aren't anymore 1s to push onto the reverse variable the algorithm ends
         // early and shift the reverse to the correct position.
+        #[inline]
         fn swap_bits(self) -> $ty {
             let mut v = self;
 
@@ -84,6 +85,7 @@ pub trait ParallelReverse<T> {
 
 macro_rules! doit_parallel { ($($ty:ty),*) => ($(
     impl ParallelReverse<$ty> for $ty {
+        #[inline]
         fn swap_bits(self) -> $ty {
             let mut v = self;
             // Swap odd and even bits
@@ -123,12 +125,14 @@ const REVERSE_LOOKUP: [u8; 256] =
      143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255];
 
 impl LookupReverse<u8> for u8 {
+    #[inline]
     fn swap_bits(self) -> u8 {
         unsafe { *REVERSE_LOOKUP.get_unchecked(self as usize) }
     }
 }
 
 impl LookupReverse<u16> for u16 {
+    #[inline]
     fn swap_bits(self) -> u16 {
         unsafe {
             (*REVERSE_LOOKUP.get_unchecked(self as u8 as usize) as u16) << 8 |
@@ -138,6 +142,7 @@ impl LookupReverse<u16> for u16 {
 }
 
 impl LookupReverse<u32> for u32 {
+    #[inline]
     fn swap_bits(self) -> u32 {
         unsafe {
             (*REVERSE_LOOKUP.get_unchecked(self as u8 as usize) as u32) << 24 |
@@ -149,6 +154,7 @@ impl LookupReverse<u32> for u32 {
 }
 
 impl LookupReverse<u64> for u64 {
+    #[inline]
     fn swap_bits(self) -> u64 {
         unsafe {
             (*REVERSE_LOOKUP.get_unchecked(self as u8 as usize) as u64) << 56 |
@@ -164,12 +170,14 @@ impl LookupReverse<u64> for u64 {
 }
 
 impl LookupReverse<usize> for usize {
+    #[inline]
     #[cfg(target_pointer_width = "32")]
     fn swap_bits(self) -> usize {
         use LookupReverse;
         LookupReverse::swap_bits(self as u32) as usize
     }
 
+    #[inline]
     #[cfg(target_pointer_width = "64")]
     fn swap_bits(self) -> usize {
         LookupReverse::swap_bits(self as u64) as usize
@@ -179,30 +187,35 @@ impl LookupReverse<usize> for usize {
 macro_rules! doit_signed {
     ($($Algo:ident),*) => ($(
         impl $Algo<i8> for i8 {
+            #[inline]
             fn swap_bits(self) -> i8 {
                 $Algo::swap_bits(self as u8) as i8
             }
         }
 
         impl $Algo<i16> for i16 {
+            #[inline]
             fn swap_bits(self) -> i16 {
                 $Algo::swap_bits(self as u16) as i16
             }
         }
 
         impl $Algo<i32> for i32 {
+            #[inline]
             fn swap_bits(self) -> i32 {
                 $Algo::swap_bits(self as u32) as i32
             }
         }
 
         impl $Algo<i64> for i64 {
+            #[inline]
             fn swap_bits(self) -> i64 {
                 $Algo::swap_bits(self as u64) as i64
             }
         }
 
         impl $Algo<isize> for isize {
+            #[inline]
             fn swap_bits(self) -> isize {
                 $Algo::swap_bits(self as usize) as isize
             }
