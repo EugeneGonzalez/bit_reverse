@@ -14,7 +14,7 @@
 //!
 //! ## YMMV Performance Comparison
 //! I wouldn't use BitwiseReverse as it is mainly there for completeness and is strictly inferior
-//! to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faseter.
+//! to ParallelReverse, which is a Bitwise Parallel Reverse and thus an order of magnitude faster.
 //! I would recommend you use the ParallelReverse as it performs equal to or better than
 //! LookupReverse for all types. Plus as an added bonus doesn't eat your cache with a lookup table.
 //!
@@ -22,9 +22,18 @@
 //! Bitwise uses the least amount of memory only using three integers to compute the reversal.
 //! Parallel allocates 3 constants of the same size of the type being reversed.
 //! Lookup allocates 256 u8s or 256 bytes to do its byte lookup reversal.
+//!
+//! ## no_std Compatible
+//! To link to core instead of STD, disable default features for this library in your Cargo.toml.
+//! [Cargo choosing features](http://doc.crates.io/specifying-dependencies.html#choosing-features)
 
 // This library abuse overflowing literals to be able to use macros to reduce duplicate code.
 #![allow(overflowing_literals)]
+
+#![cfg_attr(not(feature = "use_std"), no_std)]
+
+#[cfg(feature = "use_std")]
+extern crate std as core;
 
 /// Computes bit reversal by going bit by bit and setting the reverse position bit for the output.
 pub trait BitwiseReverse<T> {
@@ -47,7 +56,7 @@ macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
             let mut r = self;
 
             // Compute how many bits are left to shift at the end of the algorithm.
-            let mut s = 8 * std::mem::size_of::<$ty>() - 1;
+            let mut s = 8 * core::mem::size_of::<$ty>() - 1;
 
             v >>= 1;
             while v != 0 {  // Quit early if there are no more 1s to shift in

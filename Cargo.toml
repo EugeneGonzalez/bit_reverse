@@ -9,5 +9,9 @@ readme = "README.md"
 keywords = ["bit", "reverse"]
 license = "MIT/Apache-2.0"
 
+[features]
+default = ["use_std"]
+use_std = []
+
 [package.metadata.release]
 upload-doc = true
