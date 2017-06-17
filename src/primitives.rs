@@ -136,6 +136,13 @@ impl LookupReverse<u64> for u64 {
 
 impl LookupReverse<usize> for usize {
     #[inline]
+    #[cfg(target_pointer_width = "16")]
+    fn swap_bits(self) -> usize {
+        use LookupReverse;
+        LookupReverse::swap_bits(self as u16) as usize
+    }
+    
+    #[inline]
     #[cfg(target_pointer_width = "32")]
     fn swap_bits(self) -> usize {
         use LookupReverse;
