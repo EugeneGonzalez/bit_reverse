@@ -4,6 +4,7 @@ version = "0.1.7-pre"
 authors = ["Eugene Gonzalez <eugene.gonzalez44@gmail.com>"]
 description = "Computes the bit reversal of primitive integers."
 repository = "https://github.com/EugeneGonzalez/bit_reverse"
+documentation = "https://docs.rs/bit_reverse"
 readme = "README.md"
 keywords = ["bit", "swap", "reverse"]
 categories = ["no-std"]
