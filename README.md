@@ -1,5 +1,6 @@
 # bit_reverse
-[![Crates Shield](https://img.shields.io/crates/v/bit_reverse.svg "Crates.io")](https://crates.io/crates/bit_reverse) [![Build Shield](https://travis-ci.org/EugeneGonzalez/bit_reverse.svg?branch=master "TravisCI")](https://travis-ci.org/EugeneGonzalez/bit_reverse)
+[![Crates Shield](https://img.shields.io/crates/v/bit_reverse.svg "Crates.io")](https://crates.io/crates/bit_reverse) [![Build Shield](https://travis-ci.org/EugeneGonzalez/bit_reverse.svg?branch=master "TravisCI")](https://travis-ci.org/EugeneGonzalez/bit_reverse) [![Build status](https://ci.appveyor.com/api/projects/status/hkj3312s9v7rhw3p/branch/master?svg=true)](https://ci.appveyor.com/project/EugeneGonzalez/bit-reverse/branch/master)
+
 
 ### Library Objective
 This library provides a number of ways to compute the bit reversal of all primitive integers.
