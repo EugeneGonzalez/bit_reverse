@@ -35,8 +35,13 @@
 #[cfg(feature = "use_std")]
 extern crate std as core;
 
-mod primitives;
-mod slices;
+#[macro_use]
+mod macros;
 
-pub use primitives::*;
-pub use slices::*;
+mod bitwise;
+mod parallel;
+mod lookup;
+
+pub use bitwise::BitwiseReverse;
+pub use parallel::ParallelReverse;
+pub use lookup::LookupReverse;
