@@ -162,6 +162,6 @@ macro_rules! benchmark_suite {
     )
 }
 
+benchmark_suite!(bitwise, BitwiseReverse);
 benchmark_suite!(parallel, ParallelReverse);
 benchmark_suite!(lookup, LookupReverse);
-benchmark_suite!(bitwise, BitwiseReverse);
