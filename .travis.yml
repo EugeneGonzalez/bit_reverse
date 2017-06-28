@@ -1,8 +1,24 @@
+env:
+  global:
+    - CRATE_NAME=bit_reverse
+
 language: rust
 rust:
   - stable
   - beta
   - nightly
+
+os:
+  - linux
+  - osx
+
 matrix:
   allow_failures:
     - rust: nightly
+
+script:
+  - cargo test --verbose
+  - cargo test --verbose --no-default-features
+  - cargo doc --no-deps
+
+cache: cargo
