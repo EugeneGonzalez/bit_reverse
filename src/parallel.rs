@@ -18,7 +18,7 @@ macro_rules! doit_parallel { ($($ty:ty),*) => ($(
             // Swap nibbles
             v = ((v >> 4) & (0x0F0F0F0F0F0F0F0F as $ty)) | ((v & (0x0F0F0F0F0F0F0F0F as $ty)) << 4);
 
-            return v.swap_bytes();
+            v.swap_bytes()
         }
     })*)
 }

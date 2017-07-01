@@ -33,7 +33,7 @@ macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
             }
 
             // Shift the reversal to the correct position and return the reversal
-            return r << s;
+            r << s
         }
     })*)
 }

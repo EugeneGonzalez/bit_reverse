@@ -78,7 +78,7 @@ macro_rules! benchmark_suite {
             #[bench]
             fn reverse_usize(b: &mut Bencher) {
                 let mut num = SEED as usize;
-            
+
                 b.bytes = (NUM_ITERS * size_of::<usize>()) as u64;
                 b.iter(|| {
                     for _ in 0..NUM_ITERS {
