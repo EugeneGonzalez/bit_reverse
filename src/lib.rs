@@ -28,7 +28,7 @@
 //! do its computations. `LookupReverse`'s memory cost is shared by all of the types
 //! `LookupReverse` supports.
 //!
-//! ## no_std Compatible
+//! ## `no_std` Compatible
 //! To link to core instead of STD, disable default features for this library in your Cargo.toml.
 //! [Cargo choosing features](http://doc.crates.io/specifying-dependencies.html#choosing-features)
 
