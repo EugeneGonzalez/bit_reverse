@@ -29,45 +29,39 @@ const REVERSE_LOOKUP: [u8; 256] = [
 impl LookupReverse<u8> for u8 {
     #[inline]
     fn swap_bits(self) -> u8 {
-        unsafe { *REVERSE_LOOKUP.get_unchecked(self as usize) }
+        REVERSE_LOOKUP[self as usize]
     }
 }
 
 impl LookupReverse<u16> for u16 {
     #[inline]
     fn swap_bits(self) -> u16 {
-        unsafe {
-            (*REVERSE_LOOKUP.get_unchecked((self as u8) as usize) as u16) << 8 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 8) as u8) as usize) as u16)
-        }
+        (REVERSE_LOOKUP[self as u8 as usize] as u16) << 8 |
+            REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u16
     }
 }
 
 impl LookupReverse<u32> for u32 {
     #[inline]
     fn swap_bits(self) -> u32 {
-        unsafe {
-            (*REVERSE_LOOKUP.get_unchecked((self as u8) as usize) as u32) << 24 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 8) as u8) as usize) as u32) << 16 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 16) as u8) as usize) as u32) << 8 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 24) as u8) as usize) as u32)
-        }
+        (REVERSE_LOOKUP[self as u8 as usize] as u32) << 24 |
+            (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u32) << 16 |
+            (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u32) << 8 |
+            (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u32)
     }
 }
 
 impl LookupReverse<u64> for u64 {
     #[inline]
     fn swap_bits(self) -> u64 {
-        unsafe {
-            (*REVERSE_LOOKUP.get_unchecked((self as u8) as usize) as u64) << 56 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 8) as u8) as usize) as u64) << 48 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 16) as u8) as usize) as u64) << 40 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 24) as u8) as usize) as u64) << 32 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 32) as u8) as usize) as u64) << 24 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 40) as u8) as usize) as u64) << 16 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 48) as u8) as usize) as u64) << 8 |
-                (*REVERSE_LOOKUP.get_unchecked(((self >> 56) as u8) as usize) as u64)
-        }
+        (REVERSE_LOOKUP[self as u8 as usize] as u64) << 56 |
+            (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u64) << 48 |
+            (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u64) << 40 |
+            (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u64) << 32 |
+            (REVERSE_LOOKUP[(self >> 32) as u8 as usize] as u64) << 24 |
+            (REVERSE_LOOKUP[(self >> 40) as u8 as usize] as u64) << 16 |
+            (REVERSE_LOOKUP[(self >> 48) as u8 as usize] as u64) << 8 |
+            (REVERSE_LOOKUP[(self >> 56) as u8 as usize] as u64)
     }
 }
 
