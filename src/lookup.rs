@@ -1,9 +1,8 @@
-
 /// Computes bit reversal by using lookup table to translate a single byte into its reverse.
 /// For multi-byte types, the byte order is swapped to complete the reversal.
-pub trait LookupReverse<T> {
+pub trait LookupReverse {
     /// Swaps the bits such that bit i is now bit N-i, where N is the length of the T in bits.
-    fn swap_bits(self) -> T;
+    fn swap_bits(self) -> Self;
 }
 
 #[cfg_attr(rustfmt, rustfmt_skip)]
@@ -26,14 +25,14 @@ const REVERSE_LOOKUP: [u8; 256] = [
     15, 143, 79, 207, 47, 175, 111, 239, 31, 159, 95, 223, 63, 191, 127, 255
 ];
 
-impl LookupReverse<u8> for u8 {
+impl LookupReverse for u8 {
     #[inline]
     fn swap_bits(self) -> u8 {
         REVERSE_LOOKUP[self as usize]
     }
 }
 
-impl LookupReverse<u16> for u16 {
+impl LookupReverse for u16 {
     #[inline]
     fn swap_bits(self) -> u16 {
         (REVERSE_LOOKUP[self as u8 as usize] as u16) << 8 |
@@ -41,7 +40,7 @@ impl LookupReverse<u16> for u16 {
     }
 }
 
-impl LookupReverse<u32> for u32 {
+impl LookupReverse for u32 {
     #[inline]
     fn swap_bits(self) -> u32 {
         (REVERSE_LOOKUP[self as u8 as usize] as u32) << 24 |
@@ -51,7 +50,7 @@ impl LookupReverse<u32> for u32 {
     }
 }
 
-impl LookupReverse<u64> for u64 {
+impl LookupReverse for u64 {
     #[inline]
     fn swap_bits(self) -> u64 {
         (REVERSE_LOOKUP[self as u8 as usize] as u64) << 56 |
@@ -65,7 +64,7 @@ impl LookupReverse<u64> for u64 {
     }
 }
 
-impl LookupReverse<usize> for usize {
+impl LookupReverse for usize {
     #[inline]
     #[cfg(target_pointer_width = "8")]
     fn swap_bits(self) -> usize {

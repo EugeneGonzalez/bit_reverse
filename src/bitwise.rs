@@ -1,13 +1,13 @@
 use super::core;
 
 /// Computes bit reversal by going bit by bit and setting the reverse position bit for the output.
-pub trait BitwiseReverse<T> {
+pub trait BitwiseReverse {
     /// Swaps the bits such that bit i is now bit N-i, where N is the length of the T in bits.
-    fn swap_bits(self) -> T;
+    fn swap_bits(self) -> Self;
 }
 
 macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
-    impl BitwiseReverse<$ty> for $ty {
+    impl BitwiseReverse for $ty {
         // This algorithm uses the reverse variable as a like a stack to reverse the value.
         // The lesser significant bits are pushed onto the reverse variable and then the variable
         // is shifted down to make room for more significant bits. This algorithm has a shortcut,
