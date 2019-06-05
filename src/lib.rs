@@ -34,7 +34,6 @@
 
 // This library abuse overflowing literals to be able to use macros to reduce duplicate code.
 #![allow(overflowing_literals)]
-
 #![cfg_attr(not(feature = "use_std"), no_std)]
 
 #[cfg(feature = "use_std")]
@@ -44,9 +43,9 @@ extern crate std as core;
 mod macros;
 
 mod bitwise;
-mod parallel;
 mod lookup;
+mod parallel;
 
 pub use bitwise::BitwiseReverse;
-pub use parallel::ParallelReverse;
 pub use lookup::LookupReverse;
+pub use parallel::ParallelReverse;
