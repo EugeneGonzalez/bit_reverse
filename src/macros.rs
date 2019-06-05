@@ -1,34 +1,34 @@
 macro_rules! doit_signed {
     ($($Algo:ident),*) => ($(
-        impl $Algo<i8> for i8 {
+        impl $Algo for i8 {
             #[inline]
             fn swap_bits(self) -> i8 {
                 $Algo::swap_bits(self as u8) as i8
             }
         }
 
-        impl $Algo<i16> for i16 {
+        impl $Algo for i16 {
             #[inline]
             fn swap_bits(self) -> i16 {
                 $Algo::swap_bits(self as u16) as i16
             }
         }
 
-        impl $Algo<i32> for i32 {
+        impl $Algo for i32 {
             #[inline]
             fn swap_bits(self) -> i32 {
                 $Algo::swap_bits(self as u32) as i32
             }
         }
 
-        impl $Algo<i64> for i64 {
+        impl $Algo for i64 {
             #[inline]
             fn swap_bits(self) -> i64 {
                 $Algo::swap_bits(self as u64) as i64
             }
         }
 
-        impl $Algo<isize> for isize {
+        impl $Algo for isize {
             #[inline]
             fn swap_bits(self) -> isize {
                 $Algo::swap_bits(self as usize) as isize
