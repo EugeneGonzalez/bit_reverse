@@ -38,7 +38,7 @@ macro_rules! doit_signed {
 }
 
 macro_rules! test_suite {
-    () => (
+    () => {
         #[test]
         fn reverse_u8() {
             assert_eq!(0xABu8.swap_bits(), 0xD5u8);
@@ -88,5 +88,5 @@ macro_rules! test_suite {
         fn reverse_isize() {
             assert_eq!(0xFFisize.swap_bits(), 0xFFisize.swap_bytes());
         }
-    )
+    };
 }

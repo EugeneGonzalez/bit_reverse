@@ -20,10 +20,10 @@ matrix:
 
 before_script:
   - export PATH="$PATH:$HOME/.cargo/bin"
-  - which rustfmt || cargo install rustfmt
+  - rustup component add rustfmt
 
 script:
-  - cargo fmt -- --write-mode=diff
+  - cargo fmt --all -- --check
   - cargo test --verbose
   - cargo test --verbose --no-default-features
   - cargo doc --no-deps

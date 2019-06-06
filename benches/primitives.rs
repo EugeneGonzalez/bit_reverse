@@ -4,20 +4,19 @@
 extern crate bit_reverse;
 extern crate test;
 
-
 static SEED: u64 = 0x0123456789ABCDEF;
 static NUM_ITERS: usize = 1024;
 
 macro_rules! benchmark_suite {
-    ($name:ident, $algo:ident) => (
+    ($name:ident, $algo:ident) => {
         #[cfg(test)]
         mod $name {
-            use bit_reverse::$algo;
             use super::test::Bencher;
+            use bit_reverse::$algo;
             use std::mem::size_of;
 
-            use SEED;
             use NUM_ITERS;
+            use SEED;
 
             #[bench]
             fn reverse_u8(b: &mut Bencher) {
@@ -159,7 +158,7 @@ macro_rules! benchmark_suite {
                 });
             }
         }
-    )
+    };
 }
 
 benchmark_suite!(bitwise, BitwiseReverse);

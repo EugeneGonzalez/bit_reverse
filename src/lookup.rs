@@ -35,32 +35,32 @@ impl LookupReverse for u8 {
 impl LookupReverse for u16 {
     #[inline]
     fn swap_bits(self) -> u16 {
-        (REVERSE_LOOKUP[self as u8 as usize] as u16) << 8 |
-            REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u16
+        (REVERSE_LOOKUP[self as u8 as usize] as u16) << 8
+            | REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u16
     }
 }
 
 impl LookupReverse for u32 {
     #[inline]
     fn swap_bits(self) -> u32 {
-        (REVERSE_LOOKUP[self as u8 as usize] as u32) << 24 |
-            (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u32) << 16 |
-            (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u32) << 8 |
-            (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u32)
+        (REVERSE_LOOKUP[self as u8 as usize] as u32) << 24
+            | (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u32) << 16
+            | (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u32) << 8
+            | (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u32)
     }
 }
 
 impl LookupReverse for u64 {
     #[inline]
     fn swap_bits(self) -> u64 {
-        (REVERSE_LOOKUP[self as u8 as usize] as u64) << 56 |
-            (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u64) << 48 |
-            (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u64) << 40 |
-            (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u64) << 32 |
-            (REVERSE_LOOKUP[(self >> 32) as u8 as usize] as u64) << 24 |
-            (REVERSE_LOOKUP[(self >> 40) as u8 as usize] as u64) << 16 |
-            (REVERSE_LOOKUP[(self >> 48) as u8 as usize] as u64) << 8 |
-            (REVERSE_LOOKUP[(self >> 56) as u8 as usize] as u64)
+        (REVERSE_LOOKUP[self as u8 as usize] as u64) << 56
+            | (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u64) << 48
+            | (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u64) << 40
+            | (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u64) << 32
+            | (REVERSE_LOOKUP[(self >> 32) as u8 as usize] as u64) << 24
+            | (REVERSE_LOOKUP[(self >> 40) as u8 as usize] as u64) << 16
+            | (REVERSE_LOOKUP[(self >> 48) as u8 as usize] as u64) << 8
+            | (REVERSE_LOOKUP[(self >> 56) as u8 as usize] as u64)
     }
 }
 
