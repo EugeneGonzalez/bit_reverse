@@ -64,6 +64,28 @@ impl LookupReverse for u64 {
     }
 }
 
+impl LookupReverse for u128 {
+    #[inline]
+    fn swap_bits(self) -> u128 {
+        (REVERSE_LOOKUP[self as u8 as usize] as u128) << 120
+            | (REVERSE_LOOKUP[(self >> 8) as u8 as usize] as u128) << 112
+            | (REVERSE_LOOKUP[(self >> 16) as u8 as usize] as u128) << 104
+            | (REVERSE_LOOKUP[(self >> 24) as u8 as usize] as u128) << 96
+            | (REVERSE_LOOKUP[(self >> 32) as u8 as usize] as u128) << 88
+            | (REVERSE_LOOKUP[(self >> 40) as u8 as usize] as u128) << 80
+            | (REVERSE_LOOKUP[(self >> 48) as u8 as usize] as u128) << 72
+            | (REVERSE_LOOKUP[(self >> 56) as u8 as usize] as u128) << 64
+            | (REVERSE_LOOKUP[(self >> 64) as u8 as usize] as u128) << 56
+            | (REVERSE_LOOKUP[(self >> 72) as u8 as usize] as u128) << 48
+            | (REVERSE_LOOKUP[(self >> 80) as u8 as usize] as u128) << 40
+            | (REVERSE_LOOKUP[(self >> 88) as u8 as usize] as u128) << 32
+            | (REVERSE_LOOKUP[(self >> 96) as u8 as usize] as u128) << 24
+            | (REVERSE_LOOKUP[(self >> 104) as u8 as usize] as u128) << 16
+            | (REVERSE_LOOKUP[(self >> 112) as u8 as usize] as u128) << 8
+            | (REVERSE_LOOKUP[(self >> 120) as u8 as usize] as u128)
+    }
+}
+
 impl LookupReverse for usize {
     #[inline]
     #[cfg(target_pointer_width = "8")]

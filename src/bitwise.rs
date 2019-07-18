@@ -38,6 +38,6 @@ macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
     })*)
 }
 
-doit_bitwise!(u8, u16, u32, u64, usize);
+doit_bitwise!(u8, u16, u32, u64, u128, usize);
 doit_signed!(BitwiseReverse);
 test_suite!();
