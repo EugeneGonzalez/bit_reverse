@@ -64,6 +64,7 @@ impl LookupReverse for u64 {
     }
 }
 
+#[cfg(feature = "u128")]
 impl LookupReverse for u128 {
     #[inline]
     fn swap_bits(self) -> u128 {

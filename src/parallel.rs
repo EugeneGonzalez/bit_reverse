@@ -23,6 +23,8 @@ macro_rules! doit_parallel { ($($ty:ty),*) => ($(
     })*)
 }
 
-doit_parallel!(u8, u16, u32, u64, u128, usize);
+doit_parallel!(u8, u16, u32, u64, usize);
+#[cfg(feature = "u128")]
+doit_parallel!(u128);
 doit_signed!(ParallelReverse);
 test_suite!();

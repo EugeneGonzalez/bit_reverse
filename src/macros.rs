@@ -28,6 +28,7 @@ macro_rules! doit_signed {
             }
         }
 
+        #[cfg(feature = "u128")]
         impl $Algo for i128 {
             #[inline]
             fn swap_bits(self) -> i128 {
@@ -66,9 +67,13 @@ macro_rules! test_suite {
             assert_eq!(0x0123456789ABCDEFu64.swap_bits(), 0xF7B3D591E6A2C480u64);
         }
 
+        #[cfg(feature = "u128")]
         #[test]
         fn reverse_u128() {
-            assert_eq!(0x0123456789ABCDEF0123456789ABCDEFu128.swap_bits(), 0xF7B3D591E6A2C480F7B3D591E6A2C480u128);
+            assert_eq!(
+                0x0123456789ABCDEF0123456789ABCDEFu128.swap_bits(),
+                0xF7B3D591E6A2C480F7B3D591E6A2C480u128
+            );
         }
 
         #[test]
@@ -96,9 +101,13 @@ macro_rules! test_suite {
             assert_eq!(0x0123456789ABCDEFi64.swap_bits(), 0xF7B3D591E6A2C480i64);
         }
 
+        #[cfg(feature = "u128")]
         #[test]
         fn reverse_i128() {
-            assert_eq!(0x0123456789ABCDEF0123456789ABCDEFi128.swap_bits(), 0xF7B3D591E6A2C480F7B3D591E6A2C480i128);
+            assert_eq!(
+                0x0123456789ABCDEF0123456789ABCDEFi128.swap_bits(),
+                0xF7B3D591E6A2C480F7B3D591E6A2C480i128
+            );
         }
 
         #[test]
