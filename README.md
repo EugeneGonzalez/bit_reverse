@@ -30,9 +30,12 @@ These runtime characteristics are based on a Intel(R) Core(TM) i7-4770K CPU @ 3.
 `BitwiseReverse` and `ParallelReverse` both only use a couple of stack variables for their
 computations. `BitwiseReverse` takes less space than `ParallelReverse` (18 bytes on MSP430).
 `LookupReverse` on the other hand statically allocates 256 u8s or 256 bytes to
-do its computations. `LookupReverse`'s memory cost is shared by all of the types 
+do its computations. `LookupReverse`'s memory cost is shared by all of the types
 `LookupReverse` supports.
 
 ### no_std Compatible
 To link to core instead of STD, disable default features for this library in your Cargo.toml.
 [Cargo choosing features](http://doc.crates.io/specifying-dependencies.html#choosing-features)
+
+### 128bit support
+You can enable support for `u128` and `i128` by enabling the feature `u128`.
