@@ -74,6 +74,21 @@ macro_rules! benchmark_suite {
                 });
             }
 
+            #[cfg(feature = "u128")]
+            #[bench]
+            fn reverse_u128(b: &mut Bencher) {
+                let mut num = SEED as u128;
+
+                b.bytes = (NUM_ITERS * size_of::<u128>()) as u64;
+                b.iter(|| {
+                    for _ in 0..NUM_ITERS {
+                        num = num.swap_bits();
+                    }
+
+                    num
+                });
+            }
+
             #[bench]
             fn reverse_usize(b: &mut Bencher) {
                 let mut num = SEED as usize;
@@ -135,6 +150,21 @@ macro_rules! benchmark_suite {
                 let mut num = SEED as i64;
 
                 b.bytes = (NUM_ITERS * size_of::<i64>()) as u64;
+                b.iter(|| {
+                    for _ in 0..NUM_ITERS {
+                        num = num.swap_bits();
+                    }
+
+                    num
+                });
+            }
+
+            #[cfg(feature = "u128")]
+            #[bench]
+            fn reverse_i128(b: &mut Bencher) {
+                let mut num = SEED as i128;
+
+                b.bytes = (NUM_ITERS * size_of::<i128>()) as u64;
                 b.iter(|| {
                     for _ in 0..NUM_ITERS {
                         num = num.swap_bits();

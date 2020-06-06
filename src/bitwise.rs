@@ -39,5 +39,7 @@ macro_rules! doit_bitwise { ($($ty:ty),*) => ($(
 }
 
 doit_bitwise!(u8, u16, u32, u64, usize);
+#[cfg(feature = "u128")]
+doit_bitwise!(u128);
 doit_signed!(BitwiseReverse);
 test_suite!();

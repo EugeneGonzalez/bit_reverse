@@ -12,11 +12,11 @@ macro_rules! doit_parallel { ($($ty:ty),*) => ($(
         fn swap_bits(self) -> $ty {
             let mut v = self;
             // Swap odd and even bits
-            v = ((v >> 1) & (0x5555555555555555 as $ty)) | ((v & (0x5555555555555555 as $ty)) << 1);
+            v = ((v >> 1) & (0x55555555555555555555555555555555 as $ty)) | ((v & (0x55555555555555555555555555555555 as $ty)) << 1);
             // Swap consecutive pairs
-            v = ((v >> 2) & (0x3333333333333333 as $ty)) | ((v & (0x3333333333333333 as $ty)) << 2);
+            v = ((v >> 2) & (0x33333333333333333333333333333333 as $ty)) | ((v & (0x33333333333333333333333333333333 as $ty)) << 2);
             // Swap nibbles
-            v = ((v >> 4) & (0x0F0F0F0F0F0F0F0F as $ty)) | ((v & (0x0F0F0F0F0F0F0F0F as $ty)) << 4);
+            v = ((v >> 4) & (0x0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F as $ty)) | ((v & (0x0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F as $ty)) << 4);
 
             v.swap_bytes()
         }
@@ -24,5 +24,7 @@ macro_rules! doit_parallel { ($($ty:ty),*) => ($(
 }
 
 doit_parallel!(u8, u16, u32, u64, usize);
+#[cfg(feature = "u128")]
+doit_parallel!(u128);
 doit_signed!(ParallelReverse);
 test_suite!();

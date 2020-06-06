@@ -31,6 +31,9 @@
 //! ## `no_std` Compatible
 //! To link to core instead of STD, disable default features for this library in your Cargo.toml.
 //! [Cargo choosing features](http://doc.crates.io/specifying-dependencies.html#choosing-features)
+//!
+//! ## 128bit support
+//! You can enable support for `u128` and `i128` by enabling the feature `u128`.
 
 // This library abuse overflowing literals to be able to use macros to reduce duplicate code.
 #![allow(overflowing_literals)]
