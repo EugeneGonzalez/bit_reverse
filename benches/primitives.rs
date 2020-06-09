@@ -1,196 +1,173 @@
 #![allow(overflowing_literals)]
-#![feature(test)]
 
 extern crate bit_reverse;
-extern crate test;
+extern crate criterion;
+
+use bit_reverse::{BitwiseReverse, LookupReverse, ParallelReverse};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion};
 
 static SEED: u64 = 0x0123456789ABCDEF;
-static NUM_ITERS: usize = 1024;
 
-macro_rules! benchmark_suite {
-    ($name:ident, $algo:ident) => {
-        #[cfg(test)]
-        mod $name {
-            use super::test::Bencher;
-            use bit_reverse::$algo;
-            use std::mem::size_of;
+fn bench_reverse(c: &mut Criterion) {
+    let mut group = c.benchmark_group("u8_reverse");
+    let i = SEED as u8;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-            use NUM_ITERS;
-            use SEED;
+    let mut group = c.benchmark_group("i8_reverse");
+    let i = SEED as i8;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-            #[bench]
-            fn reverse_u8(b: &mut Bencher) {
-                let mut num = SEED as u8;
+    let mut group = c.benchmark_group("u16_reverse");
+    let i = SEED as u16;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-                b.bytes = (NUM_ITERS * size_of::<u8>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
+    let mut group = c.benchmark_group("i16_reverse");
+    let i = SEED as i16;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-                    num
-                });
-            }
+    let mut group = c.benchmark_group("u32_reverse");
+    let i = SEED as u32;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-            #[bench]
-            fn reverse_u16(b: &mut Bencher) {
-                let mut num = SEED as u16;
+    let mut group = c.benchmark_group("i32_reverse");
+    let i = SEED as i32;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-                b.bytes = (NUM_ITERS * size_of::<u16>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
+    let mut group = c.benchmark_group("u64_reverse");
+    let i = SEED as u64;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-                    num
-                });
-            }
+    let mut group = c.benchmark_group("i64_reverse");
+    let i = SEED as i64;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-            #[bench]
-            fn reverse_u32(b: &mut Bencher) {
-                let mut num = SEED as u32;
+    #[cfg(feature = "u128")]
+    {
+        let mut group = c.benchmark_group("u128_reverse");
+        let i = SEED as u128;
+        group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+            b.iter(|| BitwiseReverse::swap_bits(*i))
+        });
+        group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+            b.iter(|| LookupReverse::swap_bits(*i))
+        });
+        group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+            b.iter(|| ParallelReverse::swap_bits(*i))
+        });
+        group.finish();
 
-                b.bytes = (NUM_ITERS * size_of::<u32>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
+        let mut group = c.benchmark_group("i128_reverse");
+        let i = SEED as i128;
+        group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+            b.iter(|| BitwiseReverse::swap_bits(*i))
+        });
+        group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+            b.iter(|| LookupReverse::swap_bits(*i))
+        });
+        group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+            b.iter(|| ParallelReverse::swap_bits(*i))
+        });
+        group.finish();
+    }
 
-                    num
-                });
-            }
+    let mut group = c.benchmark_group("usize_reverse");
+    let i = SEED as usize;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 
-            #[bench]
-            fn reverse_u64(b: &mut Bencher) {
-                let mut num = SEED as u64;
-
-                b.bytes = (NUM_ITERS * size_of::<u64>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[cfg(feature = "u128")]
-            #[bench]
-            fn reverse_u128(b: &mut Bencher) {
-                let mut num = SEED as u128;
-
-                b.bytes = (NUM_ITERS * size_of::<u128>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_usize(b: &mut Bencher) {
-                let mut num = SEED as usize;
-
-                b.bytes = (NUM_ITERS * size_of::<usize>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_i8(b: &mut Bencher) {
-                let mut num = SEED as i8;
-
-                b.bytes = (NUM_ITERS * size_of::<i8>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_i16(b: &mut Bencher) {
-                let mut num = SEED as i16;
-
-                b.bytes = (NUM_ITERS * size_of::<i16>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_i32(b: &mut Bencher) {
-                let mut num = SEED as i32;
-
-                b.bytes = (NUM_ITERS * size_of::<i32>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_i64(b: &mut Bencher) {
-                let mut num = SEED as i64;
-
-                b.bytes = (NUM_ITERS * size_of::<i64>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[cfg(feature = "u128")]
-            #[bench]
-            fn reverse_i128(b: &mut Bencher) {
-                let mut num = SEED as i128;
-
-                b.bytes = (NUM_ITERS * size_of::<i128>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-
-            #[bench]
-            fn reverse_isize(b: &mut Bencher) {
-                let mut num = SEED as isize;
-
-                b.bytes = (NUM_ITERS * size_of::<isize>()) as u64;
-                b.iter(|| {
-                    for _ in 0..NUM_ITERS {
-                        num = num.swap_bits();
-                    }
-
-                    num
-                });
-            }
-        }
-    };
+    let mut group = c.benchmark_group("isize_reverse");
+    let i = SEED as isize;
+    group.bench_with_input(BenchmarkId::new("bitwise", i), &i, |b, i| {
+        b.iter(|| BitwiseReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("lookup", i), &i, |b, i| {
+        b.iter(|| LookupReverse::swap_bits(*i))
+    });
+    group.bench_with_input(BenchmarkId::new("parallel", i), &i, |b, i| {
+        b.iter(|| ParallelReverse::swap_bits(*i))
+    });
+    group.finish();
 }
 
-benchmark_suite!(bitwise, BitwiseReverse);
-benchmark_suite!(parallel, ParallelReverse);
-benchmark_suite!(lookup, LookupReverse);
+criterion_group!(benches, bench_reverse);
+criterion_main!(benches);
